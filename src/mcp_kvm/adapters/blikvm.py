@@ -88,7 +88,7 @@ class BliKVMAdapter(KVMAdapter):
 
     def __init__(self, config: Config):
         self.config = config
-        if not config.blikvm_host:
+        if not config.kvm_host:
             raise RuntimeError(
                 "BliKVM adapter requires BLIKVM_HOST env var. "
                 "Set it in your MCP client config."
@@ -101,10 +101,10 @@ class BliKVMAdapter(KVMAdapter):
                 "Install with: pip install mcp-kvm[blikvm]"
             ) from exc
 
-        self._host = config.blikvm_host
-        self._user = config.blikvm_user or "admin"
-        self._password = config.blikvm_password or ""
-        self._verify = config.blikvm_verify_ssl
+        self._host = config.kvm_host
+        self._user = config.kvm_user or "admin"
+        self._password = config.kvm_password or ""
+        self._verify = config.kvm_verify_ssl
         proto = "https" if self._verify else "http"
         self._base_url = f"{proto}://{self._host}"
         self._client: Optional["httpx.AsyncClient"] = None
@@ -244,7 +244,7 @@ class BliKVMAdapter(KVMAdapter):
 
     async def type_text(self, text: str) -> None:
         """Type text using BliKVM's paste API (supports international layouts)."""
-        layout = self.config.blikvm_keyboard_layout if hasattr(self.config, "blikvm_keyboard_layout") else "en-us"
+        layout = self.config.kvm_keyboard_layout if hasattr(self.config, "blikvm_keyboard_layout") else "en-us"
         await self._post("/api/hid/paste", json_data={"text": text, "lang": layout})
 
     def _resolve_key(self, key: str) -> str:

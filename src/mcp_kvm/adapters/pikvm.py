@@ -45,22 +45,22 @@ class PiKVMAdapter(KVMAdapter):
 
     def __init__(self, config: Config):
         self.config = config
-        if not config.blikvm_host:
+        if not config.kvm_host:
             raise RuntimeError(
-                "PiKVM adapter requires PIKVM_HOST (or BLIKVM_HOST) env var."
+                "PiKVM adapter requires KVM_HOST env var."
             )
         try:
             import httpx  # noqa: F401
         except ImportError as exc:
             raise RuntimeError(
                 "PiKVM adapter requires httpx. "
-                "Install with: pip install mcp-kvm[blikvm]"
+                "Install with: pip install mcp-kvm[pikvm]"
             ) from exc
 
-        self._host = config.blikvm_host
-        self._user = config.blikvm_user or "admin"
-        self._password = config.blikvm_password or ""
-        self._verify = config.blikvm_verify_ssl
+        self._host = config.kvm_host
+        self._user = config.kvm_user or "admin"
+        self._password = config.kvm_password or ""
+        self._verify = config.kvm_verify_ssl
         proto = "https" if self._verify else "http"
         self._base_url = f"{proto}://{self._host}"
         self._client: Optional["httpx.AsyncClient"] = None
@@ -160,7 +160,7 @@ class PiKVMAdapter(KVMAdapter):
     # ── Keyboard ──────────────────────────────────────────────────────────
 
     async def type_text(self, text: str) -> None:
-        layout = self.config.blikvm_keyboard_layout
+        layout = self.config.kvm_keyboard_layout
         await self._post(
             "/api/hid/print",
             params={"keymap": layout},

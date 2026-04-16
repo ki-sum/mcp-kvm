@@ -73,10 +73,10 @@ Ask Claude:
 
 > *Type "Hello from Claude" into the currently focused window.*
 
-## 5. Switch to remote control (BliKVM)
+## 5. Switch to remote control (BliKVM / PiKVM)
 
-Once you've tested locally, point the same config at a BliKVM hardware
-device to control a remote machine:
+Once you've tested locally, point the same config at KVM hardware
+to control a remote machine:
 
 ```json
 {
@@ -85,13 +85,13 @@ device to control a remote machine:
       "command": "mcp-kvm-server",
       "env": {
         "MCP_KVM_ADAPTER": "blikvm",
-        "BLIKVM_HOST": "192.168.1.100",
-        "BLIKVM_USER": "admin",
-        "BLIKVM_PASSWORD": "your-password"
+        "KVM_HOST": "192.168.1.100",
+        "KVM_USER": "admin",
+        "KVM_PASSWORD": "your-password"
       }
     }
   }
 }
 ```
 
-(HID mouse/keyboard support for BliKVM lands in v0.2.)
+For PiKVM, change `MCP_KVM_ADAPTER` to `"pikvm"`. The env var names are the same.

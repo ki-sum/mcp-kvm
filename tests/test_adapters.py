@@ -27,23 +27,31 @@ def test_base_is_abstract():
 
 def test_config_from_env(monkeypatch):
     monkeypatch.setenv("MCP_KVM_ADAPTER", "blikvm")
-    monkeypatch.setenv("BLIKVM_HOST", "10.0.0.1")
+    monkeypatch.setenv("KVM_HOST", "10.0.0.1")
     monkeypatch.setenv("MCP_KVM_SCREENSHOT_QUALITY", "90")
 
     cfg = Config.from_env()
     assert cfg.adapter == "blikvm"
-    assert cfg.blikvm_host == "10.0.0.1"
+    assert cfg.kvm_host == "10.0.0.1"
     assert cfg.screenshot_quality == 90
 
 
+def test_config_legacy_env_alias(monkeypatch):
+    """BLIKVM_HOST should still work as a legacy alias for KVM_HOST."""
+    monkeypatch.delenv("KVM_HOST", raising=False)
+    monkeypatch.setenv("BLIKVM_HOST", "10.0.0.2")
+
+    cfg = Config.from_env()
+    assert cfg.kvm_host == "10.0.0.2"
+
+
 def test_config_defaults(monkeypatch):
-    # Clear any leaked env vars from a prior test
-    for key in ("MCP_KVM_ADAPTER", "BLIKVM_HOST"):
+    for key in ("MCP_KVM_ADAPTER", "KVM_HOST", "BLIKVM_HOST"):
         monkeypatch.delenv(key, raising=False)
 
     cfg = Config.from_env()
     assert cfg.adapter == "software"
-    assert cfg.blikvm_host is None
+    assert cfg.kvm_host is None
     assert cfg.allow_destructive is False
 
 
@@ -52,13 +60,13 @@ def test_unknown_adapter_raises():
 
     cfg = Config(
         adapter="nonexistent",
-        blikvm_host=None,
-        blikvm_user=None,
-        blikvm_password=None,
-        blikvm_verify_ssl=False,
+        kvm_host=None,
+        kvm_user=None,
+        kvm_password=None,
+        kvm_verify_ssl=False,
         screenshot_max_width=1600,
         screenshot_quality=75,
-        blikvm_keyboard_layout="en-us",
+        kvm_keyboard_layout="en-us",
         allow_destructive=False,
     )
     with pytest.raises(ValueError, match="Unknown adapter"):

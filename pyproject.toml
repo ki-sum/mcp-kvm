@@ -53,6 +53,9 @@ software = [
 blikvm = [
     "httpx>=0.25",
 ]
+pikvm = [
+    "httpx>=0.25",
+]
 all = [
     "pyautogui>=0.9.54",
     "httpx>=0.25",

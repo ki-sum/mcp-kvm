@@ -9,11 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Initial alpha release.
-- MCP server exposing 9 tools: `take_screenshot`, `get_screen_size`,
+- MCP server exposing 13 tools: `take_screenshot`, `get_screen_size`,
   `mouse_click`, `mouse_move`, `mouse_scroll`, `type_text`, `send_key`,
-  `send_shortcut`, `adapter_info`.
+  `send_shortcut`, `power_on`, `power_off`, `reboot`, `get_power_state`,
+  `adapter_info`.
 - `software` adapter (pyautogui) — controls the local machine on
   Windows / macOS / Linux.
-- `blikvm` adapter (partial) — screenshots work; HID emulation pending v0.2.
+- `blikvm` adapter — full support: screenshot, mouse, keyboard, ATX power.
+  Tested on BliKVM v4 hardware.
+- `pikvm` adapter — full API support based on PiKVM documentation.
+  Community testing welcome (not yet verified on real hardware).
 - `npx mcp-kvm init` — one-line MCP config generation.
-- `pip install mcp-kvm[software]` / `[blikvm]` / `[all]` distribution.
+- `pip install mcp-kvm[software]` / `[blikvm]` / `[pikvm]` / `[all]`.
+- Remote Access guide (Tailscale, WireGuard, ZeroTier).

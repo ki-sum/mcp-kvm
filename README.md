@@ -46,7 +46,8 @@ npx mcp-kvm init
 # Or install Python package directly
 pip install mcp-kvm[software]      # for controlling this machine
 pip install mcp-kvm[blikvm]        # for BliKVM hardware
-pip install mcp-kvm[all]           # both
+pip install mcp-kvm[pikvm]         # for PiKVM hardware
+pip install mcp-kvm[all]           # all adapters
 ```
 
 ### 2. Configure your MCP client
@@ -105,23 +106,25 @@ screenshot, mouse, keyboard, ATX power on/off/reboot.
 ```json
 "env": {
   "MCP_KVM_ADAPTER": "blikvm",
-  "BLIKVM_HOST": "192.168.1.100",
-  "BLIKVM_USER": "admin",
-  "BLIKVM_PASSWORD": "..."
+  "KVM_HOST": "192.168.1.100",
+  "KVM_USER": "admin",
+  "KVM_PASSWORD": "..."
 }
 ```
 
-### `pikvm` (hardware)
+### `pikvm` (hardware, community-tested)
 
-Controls a remote machine via [PiKVM](https://pikvm.org/). Full support:
-screenshot, mouse, keyboard, ATX power on/off/reboot.
+Controls a remote machine via [PiKVM](https://pikvm.org/). Implements full
+API support based on official PiKVM documentation. **Not yet verified on real
+hardware** — community testing and feedback welcome via
+[GitHub Issues](https://github.com/ki-sum/mcp-kvm/issues).
 
 ```json
 "env": {
   "MCP_KVM_ADAPTER": "pikvm",
-  "BLIKVM_HOST": "192.168.1.100",
-  "BLIKVM_USER": "admin",
-  "BLIKVM_PASSWORD": "..."
+  "KVM_HOST": "192.168.1.100",
+  "KVM_USER": "admin",
+  "KVM_PASSWORD": "..."
 }
 ```
 
@@ -150,7 +153,7 @@ cloud relay, end-to-end encrypted.
 ```json
 "env": {
   "MCP_KVM_ADAPTER": "blikvm",
-  "BLIKVM_HOST": "100.64.0.5"
+  "KVM_HOST": "100.64.0.5"
 }
 ```
 
@@ -200,10 +203,11 @@ If you like `mcp-kvm`, please star it and share your use case on
 ## Roadmap
 
 - [x] **v0.1** — Software, BliKVM, PiKVM adapters, 13 tools, npm + PyPI packaging
-- [ ] **v0.2** — Screenshot diffing for bandwidth savings, Wake-on-LAN
-- [ ] **v0.4** — `run_task` tool (built-in agent loop for multi-step autonomy)
-- [ ] **v0.5** — Multi-display support, image-based click verification
-- [ ] **v1.0** — Stable API, entry-point plugins, certified adapter list
+- [ ] **v0.2** — Multi-display support, image-based click verification
+- [ ] **v0.3** — MCP Resources for knowledge injection (browser patterns, keyboard shortcuts)
+- [ ] **v0.4** — Context memory + action verification (AI remembers past actions, verifies success)
+- [ ] **v0.5** — `run_task` tool (built-in agent loop with self-healing and precision clicking)
+- [ ] **v1.0** — Stable API, entry-point adapter plugins, certified adapter list
 
 ---
 
