@@ -19,19 +19,22 @@ give up, `mcp-kvm` keeps working.
 
 ## Why KVM instead of a software agent?
 
-| Scenario | Software agents (Computer Use, Operator, UFO) | `mcp-kvm` |
-|----------|----------------------------------------------|-----------|
+| Scenario | Software agents | `mcp-kvm` |
+|----------|----------------|-----------|
 | Automate a logged-in desktop | ✅ | ✅ |
-| Log in to a locked Windows machine | ❌ | ✅ |
+| Log in to a locked machine | ❌ | ✅ |
 | Fix a blue screen or boot loop | ❌ | ✅ |
 | Control BIOS / UEFI settings | ❌ | ✅ |
-| Work on a machine where you can't install software | ❌ | ✅ |
-| Operate industrial / POS / embedded systems | ❌ | ✅ |
-| Handle air-gapped or compliance-restricted environments | ❌ | ✅ |
+| Power on / power off remotely | ❌ | ✅ |
+| **Zero software on target** — nothing to install | ❌ | ✅ |
+| **IT-restricted machines** — admin blocks all installs | ❌ | ✅ |
+| Industrial / POS / embedded / legacy systems | ❌ | ✅ |
+| Air-gapped / compliance-restricted environments | ❌ | ✅ |
 
-KVM (keyboard-video-mouse) hardware sits between your keyboard/mouse/monitor
-and the target computer. It's a physical layer — the target sees it as a
-normal USB keyboard and mouse, with zero software installed.
+**Zero intrusion.** KVM hardware sits between your keyboard/mouse/monitor and
+the target computer. The target sees it as a normal USB keyboard and mouse —
+no agent, no driver, no software, no admin rights needed. IT departments can't
+block it because there's nothing to install.
 
 ---
 
