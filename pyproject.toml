@@ -1,0 +1,86 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mcp-kvm"
+version = "0.1.0"
+description = "MCP server — let AI control any computer through KVM hardware. BIOS, login screens, and crashes included."
+readme = "README.md"
+license = {text = "Apache-2.0"}
+requires-python = ">=3.10"
+authors = [
+    {name = "ki-sum", email = "info@ki-sum.ai"},
+]
+keywords = [
+    "mcp",
+    "claude",
+    "kvm",
+    "blikvm",
+    "pikvm",
+    "ai-agent",
+    "computer-use",
+    "automation",
+    "sysadmin",
+    "homelab",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: System :: Hardware",
+    "Topic :: System :: Systems Administration",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "mcp>=1.0",
+    "pillow>=10.0",
+]
+
+[project.optional-dependencies]
+software = [
+    # pyautogui is only needed for the software adapter
+    # (controlling the machine the MCP server runs on)
+    "pyautogui>=0.9.54",
+]
+blikvm = [
+    "httpx>=0.25",
+]
+all = [
+    "pyautogui>=0.9.54",
+    "httpx>=0.25",
+]
+dev = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.21",
+    "ruff>=0.1",
+]
+
+[project.scripts]
+mcp-kvm = "mcp_kvm.cli:main"
+mcp-kvm-server = "mcp_kvm.server:main"
+
+[project.urls]
+Homepage = "https://github.com/ki-sum/mcp-kvm"
+Repository = "https://github.com/ki-sum/mcp-kvm"
+Issues = "https://github.com/ki-sum/mcp-kvm/issues"
+Documentation = "https://github.com/ki-sum/mcp-kvm#readme"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["mcp_kvm*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]
